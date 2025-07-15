@@ -5,8 +5,7 @@ import { useModal } from "@/context/ModalContext";
 import Image from "next/image";
 
 export default function ModalSelector() {
-  const { modalType, isVisible, hideModal, modalMessage, onClosePress } =
-    useModal();
+  const { modalType, isVisible, hideModal, modalMessage } = useModal();
 
   if (!isVisible) return null;
 

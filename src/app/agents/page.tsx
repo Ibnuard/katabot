@@ -20,8 +20,7 @@ export default function Page() {
   const [agents, setAgents] = useState<Agent[]>([]);
 
   const user = getUser();
-  const { showModal, setModalType, modalType, hideModal, setModalMessage } =
-    useModal();
+  const { showModal, setModalType, hideModal, setModalMessage } = useModal();
 
   useEffect(() => {
     const fetchAgents = async () => {

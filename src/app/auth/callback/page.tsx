@@ -11,6 +11,8 @@ export default function AuthCallback() {
     const getSessionAndRedirect = async () => {
       const { data, error } = await supabase.auth.getSession();
 
+      console.log("Error", error);
+
       if (data.session) {
         localStorage.setItem("user", JSON.stringify(data.session.user));
         router.replace("/agents");

@@ -35,6 +35,8 @@ export default function Page() {
         localStorage.setItem("user", JSON.stringify(user));
         router.replace("/agents");
       }
+
+      console.log("Error", error);
     };
 
     checkSession();

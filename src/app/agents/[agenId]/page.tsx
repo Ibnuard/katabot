@@ -48,6 +48,8 @@ export default function Page() {
         setAgent(agent);
         hideModal();
       } catch (error) {
+        console.log("Error", error);
+
         setModalMessage("Gagal mendapatkan data agen, coba lagi yaa!");
         setOnClosePress(() => router.back());
         setModalType("popup");

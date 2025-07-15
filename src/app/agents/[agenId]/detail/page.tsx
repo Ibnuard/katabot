@@ -50,6 +50,8 @@ export default function Page() {
         setAgent(agent);
         hideModal();
       } catch (error) {
+        console.log("Error", error);
+
         setModalMessage("Gagal mendapatkan data agen, coba lagi yaa!");
         setOnClosePress(() => router.back());
         setModalType("popup");
@@ -75,6 +77,8 @@ export default function Page() {
       });
       setModalType("popup");
     } catch (error) {
+      console.log("Error", error);
+
       setModalMessage("Gagal menyimpan agen, mohon coba lagi!");
       setModalType("popup");
     }

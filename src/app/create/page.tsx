@@ -17,13 +17,8 @@ export default function Page() {
   const router = useRouter();
 
   // modal
-  const {
-    showModal,
-    hideModal,
-    setModalType,
-    setModalMessage,
-    setOnClosePress,
-  } = useModal();
+  const { showModal, setModalType, setModalMessage, setOnClosePress } =
+    useModal();
 
   useEffect(() => {
     if (!user) {
@@ -42,8 +37,12 @@ export default function Page() {
         router.replace("/agents");
       });
       setModalType("popup");
-    } catch (error: any) {
-      setModalMessage(error.message || "Gagal membuat agen, mohon coba lagi!");
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Gagal membuat agen, mohon coba lagi!";
+      setModalMessage(message);
       setModalType("popup");
     }
   };

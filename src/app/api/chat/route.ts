@@ -53,6 +53,8 @@ export async function POST(req: Request) {
       const json = JSON.parse(text);
       return NextResponse.json(json);
     } catch (jsonErr) {
+      console.log("JSON Err", jsonErr);
+
       return NextResponse.json(
         { error: "Response not JSON", text },
         { status: 500 }
