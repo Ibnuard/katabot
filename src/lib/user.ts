@@ -4,7 +4,7 @@ export interface UserData {
   email: string;
   name?: string;
   avatar_url?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function getUser(): UserData | null {
