@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-sans: var(--font-poppins);
+
+  --accent: #ffa518;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-poppins);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), sans-serif;
+}
+
+.input {
+  @apply bg-white outline-2 outline-black font-mono text-black font-semibold w-full;
+}
+
+.textarea {
+  @apply bg-white outline-2 outline-black font-mono text-black font-semibold w-full;
+}
+
+.btn {
+  @apply border-b-4 border-r-4 shadow-none font-mono rounded-lg bg-white text-black transition-colors duration-200;
+}
+
+.btn:hover {
+  @apply border-b-2 border-r-2;
+  background-color: var(--accent);
+  color: white;
+}
+
+.card {
+  @apply border-b-4 border-r-4 border-l border-t shadow-none font-mono;
+}
+
+.pattern-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  background-color: white;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.modal-box {
+  @apply bg-white w-sm border-r-4 border-b-4;
+}
+
+.modal {
+  z-index: 100;
+}
