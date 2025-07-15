@@ -31,7 +31,11 @@ export default function Page() {
     showModal();
 
     try {
-      await createAgent(agentName, agentDescription, agentSummary, user?.id!);
+      if (!user?.id) {
+        throw new Error("User ID tidak ditemukan");
+      }
+
+      await createAgent(agentName, agentDescription, agentSummary, user.id);
       setModalMessage("Sukses membuat agen!");
       setOnClosePress(() => {
         router.replace("/agents");
