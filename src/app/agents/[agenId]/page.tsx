@@ -179,9 +179,10 @@ export default function Page() {
             {/* Chat Input */}
             <div className="border-t border-base-300 p-3">
               <div className="flex flex-row gap-2.5 mb-4 overflow-x-auto whitespace-nowrap">
-                {agent?.faq_list.map((item) => {
+                {agent?.faq_list.map((item: string, index: number) => {
                   return (
                     <button
+                      key={index}
                       onClick={() => handleSendMessage(item)}
                       disabled={loading}
                       className="btn card px-2.5 py-1.5 shrink-0 min-w-max"
