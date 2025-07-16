@@ -13,6 +13,7 @@ type Agent = {
   agent_name: string;
   agent_summary: string;
   agent_description: string;
+  creator_id: string;
 };
 
 export default function Page() {
@@ -63,6 +64,7 @@ export default function Page() {
               {agents.map((agent) => (
                 <AgentCard
                   key={agent.id}
+                  creatorId={agent.creator_id}
                   title={agent.agent_name}
                   summary={agent.agent_summary}
                   onClick={() => router.push(`/agents/${agent.id}`)}

@@ -1,4 +1,7 @@
+import { getUser } from "@/lib/user";
+
 interface IAgentCard {
+  creatorId: string;
   title: string;
   summary: string;
   onClick: () => void;
@@ -6,6 +9,9 @@ interface IAgentCard {
 }
 
 export default function AgentCard(props: IAgentCard) {
+  const user = getUser();
+  const IS_CREATOR = user?.id == props.creatorId;
+
   return (
     <div className="card w-full card-xs">
       <div className="card-body">
@@ -13,7 +19,7 @@ export default function AgentCard(props: IAgentCard) {
         <p>{props.summary}</p>
         <div className="justify-end card-actions mt-4">
           <button onClick={props.onClickDetail} className="btn">
-            Detail Agen
+            {IS_CREATOR ? "Edit Agen" : "Detail Agen"}
           </button>
           <button onClick={props.onClick} className="btn">
             Cobain Agen

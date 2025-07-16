@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { agent, question } = body;
+    const { agent, question, context } = body;
 
     const agentIntl = `
     Perhatikan data berikut
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
           },
           {
             role: "system",
-            content: `Jawab berdasarkan history chat berikut`,
+            content: `Jawab berdasarkan history chat berikut, dimana type chat-start adalah dari sisi bot dan chat-end adalah pesan dari sisi user, berikut data history chatnya \n\n${context}`,
           },
           {
             role: "system",
@@ -47,11 +47,11 @@ export async function POST(req: Request) {
     });
 
     const text = await res.text();
-    console.log("RAW RES:", text);
 
     try {
       const json = JSON.parse(text);
-      return NextResponse.json(json);
+      const answer = json.choices?.[0]?.message?.content ?? "Gagal menjawab.";
+      return NextResponse.json({ answer });
     } catch (jsonErr) {
       console.log("JSON Err", jsonErr);
 

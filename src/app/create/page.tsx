@@ -1,5 +1,6 @@
 "use client";
 
+import FAQEditor from "@/components/FAQEditor";
 import { useModal } from "@/context/ModalContext";
 import MainLayout from "@/layout/MainLayout";
 import { createAgent } from "@/lib/agents";
@@ -11,6 +12,7 @@ export default function Page() {
   const [agentName, setAgentName] = useState<string>("");
   const [agentSummary, setAgentSummary] = useState<string>("");
   const [agentDescription, setAgentDescription] = useState<string>("");
+  const [faqList, setFAQList] = useState<string[]>([]);
 
   const user = getUser();
 
@@ -35,7 +37,13 @@ export default function Page() {
         throw new Error("User ID tidak ditemukan");
       }
 
-      await createAgent(agentName, agentDescription, agentSummary, user.id);
+      await createAgent(
+        agentName,
+        agentDescription,
+        agentSummary,
+        user.id,
+        faqList
+      );
       setModalMessage("Sukses membuat agen!");
       setOnClosePress(() => {
         router.replace("/agents");
@@ -96,6 +104,8 @@ export default function Page() {
             onChange={(e) => setAgentDescription(e.target.value)}
           />
         </div>
+
+        <FAQEditor value={faqList} setValue={setFAQList} />
 
         <button
           disabled={!agentName || !agentDescription || !agentSummary}

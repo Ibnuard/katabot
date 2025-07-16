@@ -13,6 +13,7 @@ type Agent = {
   agent_name: string;
   agent_summary: string;
   agent_description: string;
+  faq_list: string[];
 };
 
 type Chat = {
@@ -72,14 +73,16 @@ export default function Page() {
     }
   }, [agent]);
 
-  async function handleSendMessage() {
+  async function handleSendMessage(message?: string) {
+    const chat = message ? message : userChat;
+
     setLoading(true);
-    setChats((prev) => [...prev, { type: "chat-end", message: userChat }]);
+    setChats((prev) => [...prev, { type: "chat-end", message: chat }]);
     setUserChat("");
 
     // agent side
     setChats((prev) => [...prev, { type: "chat-start", isLoading: true }]);
-    const botReply = await replyChat(agent!, userChat);
+    const botReply = await replyChat(agent!, chat, chats);
 
     if (botReply) {
       setChats((prev) => {
@@ -175,7 +178,27 @@ export default function Page() {
 
             {/* Chat Input */}
             <div className="border-t border-base-300 p-3">
-              <div className="flex gap-2">
+              <div className="flex flex-row gap-2.5 mb-4 overflow-x-auto whitespace-nowrap">
+                {agent?.faq_list.map((item) => {
+                  return (
+                    <button
+                      onClick={() => handleSendMessage(item)}
+                      disabled={loading}
+                      className="btn card px-2.5 py-1.5 shrink-0 min-w-max"
+                    >
+                      <div className="text-xs">{item}</div>
+                    </button>
+                  );
+                })}
+              </div>
+              <form
+                className="flex gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault(); // mencegah reload
+                  if (!userChat || loading) return;
+                  handleSendMessage();
+                }}
+              >
                 <input
                   type="text"
                   disabled={loading}
@@ -185,13 +208,13 @@ export default function Page() {
                   onChange={(e) => setUserChat(e.target.value)}
                 />
                 <button
-                  onClick={handleSendMessage}
+                  type="submit"
                   disabled={!userChat || loading}
                   className="btn"
                 >
                   Kirim
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>

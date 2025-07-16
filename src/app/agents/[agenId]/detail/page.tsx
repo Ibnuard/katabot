@@ -1,5 +1,6 @@
 "use client";
 
+import FAQEditor from "@/components/FAQEditor";
 import { useModal } from "@/context/ModalContext";
 import MainLayout from "@/layout/MainLayout";
 import { getAgent, updateAgentById } from "@/lib/agents";
@@ -13,6 +14,7 @@ type Agent = {
   agent_summary: string;
   agent_description: string;
   creator_id: string;
+  faq_list: string[];
 };
 
 export default function Page() {
@@ -20,6 +22,7 @@ export default function Page() {
   const [agentName, setAgentName] = useState<string>("");
   const [agentSummary, setAgentSummary] = useState<string>("");
   const [agentDescription, setAgentDescription] = useState<string>("");
+  const [faqList, setFAQList] = useState<string[]>([]);
 
   const user = getUser();
 
@@ -47,6 +50,7 @@ export default function Page() {
         setAgentName(agent.agent_name);
         setAgentSummary(agent.agent_summary);
         setAgentDescription(agent.agent_description);
+        setFAQList(agent.faq_list);
         setAgent(agent);
         hideModal();
       } catch (error) {
@@ -70,6 +74,7 @@ export default function Page() {
         agent_name: agentName,
         agent_summary: agentSummary,
         agent_description: agentDescription,
+        faq_list: faqList,
       });
       setModalMessage("Sukses menyimpan agen!");
       setOnClosePress(() => {
@@ -134,6 +139,12 @@ export default function Page() {
             onChange={(e) => setAgentDescription(e.target.value)}
           />
         </div>
+
+        <FAQEditor
+          isCreator={IS_CREATOR}
+          value={faqList}
+          setValue={setFAQList}
+        />
 
         {IS_CREATOR && (
           <button
