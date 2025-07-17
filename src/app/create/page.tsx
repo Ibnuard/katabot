@@ -105,7 +105,7 @@ export default function Page() {
           />
         </div>
 
-        <FAQEditor value={faqList} setValue={setFAQList} />
+        <FAQEditor isCreator={true} value={faqList} setValue={setFAQList} />
 
         <button
           disabled={!agentName || !agentDescription || !agentSummary}
