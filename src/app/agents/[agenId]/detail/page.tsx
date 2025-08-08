@@ -15,6 +15,7 @@ type Agent = {
   agent_description: string;
   creator_id: string;
   faq_list: string[];
+  api_data: string;
 };
 
 export default function Page() {
@@ -22,6 +23,7 @@ export default function Page() {
   const [agentName, setAgentName] = useState<string>("");
   const [agentSummary, setAgentSummary] = useState<string>("");
   const [agentDescription, setAgentDescription] = useState<string>("");
+  const [dataSource, setDataSource] = useState<string>("");
   const [faqList, setFAQList] = useState<string[]>([]);
 
   const user = getUser();
@@ -52,6 +54,7 @@ export default function Page() {
         setAgentDescription(agent.agent_description);
         setFAQList(agent.faq_list);
         setAgent(agent);
+        setDataSource(agent.api_data);
         hideModal();
       } catch (error) {
         console.log("Error", error);
@@ -75,6 +78,7 @@ export default function Page() {
         agent_summary: agentSummary,
         agent_description: agentDescription,
         faq_list: faqList,
+        api_data: dataSource,
       });
       setModalMessage("Sukses menyimpan agen!");
       setOnClosePress(() => {
@@ -138,6 +142,29 @@ export default function Page() {
             disabled={!IS_CREATOR}
             onChange={(e) => setAgentDescription(e.target.value)}
           />
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          <p className="text-sm font-mono text-black">
+            (Opsional) API sumber data agen
+          </p>
+          <div className="relative">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="https://example.com/api/data.json"
+                className="input pr-20 focus:z-0" // tambahkan z-index rendah saat focus
+                value={dataSource}
+                onChange={(e) => setDataSource(e.target.value)}
+              />
+              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 bg-blue-100 text-blue-700 text-xs font-mono px-2 py-0.5 rounded-full border border-blue-300 z-10">
+                GET
+              </span>
+            </div>
+          </div>
+          <p className="text-xs font-mono text-grey-200">
+            Agen akan belajar dari API ini jika disediakan.
+          </p>
         </div>
 
         <FAQEditor

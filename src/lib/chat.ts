@@ -14,8 +14,26 @@ type Chat = {
 export const replyChat = async (
   agent: Agent,
   userQuestion: string,
-  contextChat: Chat[]
+  contextChat: Chat[],
+  api_data?: string
 ) => {
+  let API_DATA_RESPONSE;
+
+  if (api_data != null) {
+    const response = await fetch(api_data, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (data) {
+      API_DATA_RESPONSE = JSON.stringify(data);
+    }
+  }
+
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: {
@@ -25,6 +43,7 @@ export const replyChat = async (
       agent: agent,
       question: userQuestion,
       context: JSON.stringify(contextChat),
+      data_source: API_DATA_RESPONSE,
     }),
   });
 

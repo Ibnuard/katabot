@@ -14,6 +14,7 @@ type Agent = {
   agent_summary: string;
   agent_description: string;
   faq_list: string[];
+  api_data?: string;
 };
 
 type Chat = {
@@ -82,7 +83,7 @@ export default function Page() {
 
     // agent side
     setChats((prev) => [...prev, { type: "chat-start", isLoading: true }]);
-    const botReply = await replyChat(agent!, chat, chats);
+    const botReply = await replyChat(agent!, chat, chats, agent?.api_data);
 
     if (botReply) {
       setChats((prev) => {
@@ -103,7 +104,7 @@ export default function Page() {
         <div className="block md:hidden">
           <div
             tabIndex={0}
-            className="collapse collapse-arrow border border-base-300 rounded-lg"
+            className="collapse collapse-arrow border border-gray-200 bg-[#fffaf0] rounded-lg"
           >
             <div className="flex flex-row items-center gap-2 collapse-title">
               <div>
@@ -127,7 +128,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="card p-4 hidden md:block">
+        <div className="card p-4 bg-[#fffaf0] border border-gray-200 hidden md:block">
           <div className="flex flex-row items-center gap-2">
             <div>
               <Image
@@ -163,9 +164,9 @@ export default function Page() {
                     >
                       {item.isLoading ? (
                         <div className="flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce [animation-delay:.1s]" />
-                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce [animation-delay:.2s]" />
-                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce [animation-delay:.3s]" />
+                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce ease-in-out [animation-delay:.1s]" />
+                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce ease-in-out [animation-delay:.2s]" />
+                          <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce ease-in-out [animation-delay:.3s]" />
                         </div>
                       ) : (
                         item.message
@@ -178,7 +179,7 @@ export default function Page() {
 
             {/* Chat Input */}
             <div className="border-t border-base-300 p-3">
-              <div className="flex flex-row gap-2.5 mb-4 overflow-x-auto whitespace-nowrap">
+              <div className="flex flex-row gap-2.5 mb-4 overflow-x-auto whitespace-nowrap p-2.5">
                 {agent?.faq_list.map((item: string, index: number) => {
                   return (
                     <button
@@ -204,14 +205,15 @@ export default function Page() {
                   type="text"
                   disabled={loading}
                   placeholder="Tulis pesan..."
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full font-mono text-sm bg-white"
                   value={userChat}
                   onChange={(e) => setUserChat(e.target.value)}
                 />
+
                 <button
                   type="submit"
                   disabled={!userChat || loading}
-                  className="btn"
+                  className="btn bg-[var(--accent)] text-white hover:brightness-110"
                 >
                   Kirim
                 </button>

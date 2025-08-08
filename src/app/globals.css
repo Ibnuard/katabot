@@ -37,7 +37,7 @@ body {
 }
 
 .btn {
-  @apply border-b-4 border-r-4 shadow-none font-mono rounded-lg bg-white text-black transition-colors duration-200;
+  @apply border-2 font-mono rounded-lg bg-[var(--accent)] text-white transition-all duration-200 hover:brightness-110 hover:scale-105;
 }
 
 .btn:hover {
@@ -47,7 +47,7 @@ body {
 }
 
 .card {
-  @apply border-b-4 border-r-4 border-l border-t shadow-none font-mono;
+  @apply border-b-4 border-r-2 border-l-2 border-t-2 font-mono shadow-sm hover:shadow-md transition-all duration-200;
 }
 
 .pattern-bg {
@@ -65,4 +65,30 @@ body {
 
 .modal {
   z-index: 100;
+}
+
+.text-title {
+  @apply text-xl font-bold text-black;
+}
+
+.text-subtitle {
+  @apply text-sm text-gray-600;
+}
+
+.text-accent {
+  @apply text-[var(--accent)];
+}
+
+.bg-soft {
+  background-color: #fffaf0;
+}
+
+chat-bubble {
+  @apply text-sm font-mono;
+}
+.chat-start .chat-bubble {
+  @apply bg-[#f3f4f6] text-black;
+}
+.chat-end .chat-bubble {
+  @apply bg-[var(--accent)] text-white;
 }

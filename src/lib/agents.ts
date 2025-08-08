@@ -5,7 +5,8 @@ export const createAgent = async (
   agentDescription: string,
   agentSummary: string,
   creatorId: string,
-  faqList: string[]
+  faqList: string[],
+  dataSource?: string
 ) => {
   // Cek apakah sudah ada agent dengan creator_id yang sama
   const { data: existingAgent, error: fetchError } = await supabase
@@ -27,6 +28,7 @@ export const createAgent = async (
     agent_summary: agentSummary,
     creator_id: creatorId,
     faq_list: faqList,
+    api_data: dataSource,
   });
 
   if (error) throw error;
@@ -61,6 +63,7 @@ export const updateAgentById = async (
     agent_description?: string;
     agent_summary?: string;
     faq_list?: string[];
+    api_data?: string;
   }
 ) => {
   const { data, error } = await supabase

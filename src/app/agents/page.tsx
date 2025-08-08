@@ -46,19 +46,21 @@ export default function Page() {
       <div className="flex flex-col gap-12 p-2.5 md:p-7 lg:p-11">
         {user && (
           <div>
-            <p className="text-sm font-mono font-semibold mb-6">
-              Mau coba bikin agen sendiri?
+            <p className="text-title text-accent mb-2">Bikin Agen Sendiri</p>
+            <p className="text-subtitle mb-6">
+              Eksperimen dengan ide kamu dan buat AI yang bisa bantu banyak hal.
             </p>
             <button onClick={() => router.push("/create")} className="btn">
-              Mulai Buat Agen
+              + Buat Agen
             </button>
           </div>
         )}
 
         {agents.length > 0 && (
           <div>
-            <p className="text-sm font-mono font-semibold mb-6">
-              Agen yang siap dicobain
+            <p className="text-title mb-2">Agen Siap Pakai 🤖</p>
+            <p className="text-subtitle mb-6">
+              Langsung coba beberapa agen yang udah dibuat pengguna lain.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
               {agents.map((agent) => (

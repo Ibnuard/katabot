@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { agent, question, context } = body;
+    const { agent, question, context, data_source } = body;
 
     const agentIntl = `
     Perhatikan data berikut
@@ -15,6 +15,32 @@ export async function POST(req: Request) {
 
     berdasarkan data diatas berprilakulah sebagai assisten customer service dimana kamu akan membantu pelanggan untuk menjawab pertanyaan mereka, jika pertanyaan pelanggan tidak ada yang sesuai dengan data diatas atau out of topic maka cukup jawab dengan maaf dan senyuman, usahakan setiap jawaban harus mengandung emot ceria tapi jangan terlalu lebay dan jangan basa basi juga, secukupnya aja, jangan gunakan tanda tanda seperti simbol untuk bold atau kiasan agar terlihat tetap profesional
     `;
+
+    let MESSAGES = [
+      {
+        role: "system",
+        content: `Nama kamu adalah ${agent.agent_name}`,
+      },
+      {
+        role: "system",
+        content: `Jawab berdasarkan history chat berikut, dimana type chat-start adalah dari sisi bot dan chat-end adalah pesan dari sisi user, berikut data history chatnya \n\n${context}`,
+      },
+      {
+        role: "system",
+        content: agentIntl,
+      },
+      {
+        role: "user",
+        content: question,
+      },
+    ];
+
+    if (data_source) {
+      MESSAGES.push({
+        role: "system",
+        content: `Berikut adalah data tambahan dari api ${data_source}; Jawab pertanyaan berdasarkan data yg diberikan`,
+      });
+    }
 
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -25,24 +51,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: "deepseek/deepseek-chat-v3-0324:free",
         stream: false,
-        messages: [
-          {
-            role: "system",
-            content: `Nama kamu adalah ${agent.agent_name}`,
-          },
-          {
-            role: "system",
-            content: `Jawab berdasarkan history chat berikut, dimana type chat-start adalah dari sisi bot dan chat-end adalah pesan dari sisi user, berikut data history chatnya \n\n${context}`,
-          },
-          {
-            role: "system",
-            content: agentIntl,
-          },
-          {
-            role: "user",
-            content: question,
-          },
-        ],
+        messages: MESSAGES,
       }),
     });
 

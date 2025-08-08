@@ -12,6 +12,7 @@ export default function Page() {
   const [agentName, setAgentName] = useState<string>("");
   const [agentSummary, setAgentSummary] = useState<string>("");
   const [agentDescription, setAgentDescription] = useState<string>("");
+  const [dataSource, setDataSource] = useState<string>("");
   const [faqList, setFAQList] = useState<string[]>([]);
 
   const user = getUser();
@@ -42,7 +43,8 @@ export default function Page() {
         agentDescription,
         agentSummary,
         user.id,
-        faqList
+        faqList,
+        dataSource
       );
       setModalMessage("Sukses membuat agen!");
       setOnClosePress(() => {
@@ -103,6 +105,29 @@ export default function Page() {
             value={agentDescription}
             onChange={(e) => setAgentDescription(e.target.value)}
           />
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          <p className="text-sm font-mono text-black">
+            (Opsional) API sumber data agen
+          </p>
+          <div className="relative">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="https://example.com/api/data.json"
+                className="input pr-20 z-10" // tetap z-10 agar di bawah chip
+                value={dataSource}
+                onChange={(e) => setDataSource(e.target.value)}
+              />
+              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 bg-blue-100 text-blue-700 text-xs font-mono px-2 py-0.5 rounded-full border border-blue-300 z-20">
+                GET
+              </span>
+            </div>
+          </div>
+          <p className="text-xs font-mono text-grey-200">
+            Agen akan belajar dari API ini jika disediakan.
+          </p>
         </div>
 
         <FAQEditor isCreator={true} value={faqList} setValue={setFAQList} />
