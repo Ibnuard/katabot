@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     berdasarkan data diatas berprilakulah sebagai assisten customer service dimana kamu akan membantu pelanggan untuk menjawab pertanyaan mereka, jika pertanyaan pelanggan tidak ada yang sesuai dengan data diatas atau out of topic maka cukup jawab dengan maaf dan senyuman, usahakan setiap jawaban harus mengandung emot ceria tapi jangan terlalu lebay dan jangan basa basi juga, secukupnya aja, jangan gunakan tanda tanda seperti simbol untuk bold atau kiasan agar terlihat tetap profesional
     `;
 
-    let MESSAGES = [
+    const MESSAGES = [
       {
         role: "system",
         content: `Nama kamu adalah ${agent.agent_name}`,
